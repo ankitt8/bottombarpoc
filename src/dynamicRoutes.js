@@ -1,6 +1,6 @@
-import Categories from "./pages/Categories";
-import Cart from "./pages/Cart";
-import Home from "./pages/Home";
+import Categories from "./Categories";
+import Cart from "./Cart";
+import Home from "./Home";
 
 const routes = [
     {

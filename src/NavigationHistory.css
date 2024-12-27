@@ -1,0 +1,9 @@
+.navigation-history-container .path {
+    transition: color 0.5s ease, transform 0.5s ease;
+    color: black;
+}
+
+.navigation-history-container .path.animate {
+    color: #28a745; /* Highlight new string */
+    transform: scale(1.2); /* Subtle scale effect */
+}

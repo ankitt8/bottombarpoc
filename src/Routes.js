@@ -4,7 +4,7 @@ import App from "./App";
 
 const Home = ({ navigate }) => (
     <div>
-        <h1>Welcome to Home</h1>
+        <h1>Home Tab</h1>
         <button onClick={() => navigate('/l1')}>Go to L1</button>
     </div>
 );
@@ -25,7 +25,7 @@ const HomeL2 = ({ navigate }) => (
 
 const Categories = ({ navigate }) => (
     <div>
-        <h1>Welcome to Categories</h1>
+        <h1>Categories Tab</h1>
         <button onClick={() => navigate('/categories/l1')}>Go to L1</button>
     </div>
 );
@@ -45,9 +45,17 @@ const CategoriesL2 = ({ navigate }) => (
     </div>
 );
 
+
+const CategoriesL3 = ({ navigate }) => (
+    <div>
+        <h1>Categories - L3 Page</h1>
+        <button onClick={() => navigate('/categories')}>Go to Categories</button>
+    </div>
+);
+
 const Cart = ({ navigate }) => (
     <div>
-        <h1>Welcome to Cart</h1>
+        <h1>Cart Tab</h1>
         <button onClick={() => navigate('/cart/l1')}>Go to L1</button>
     </div>
 );
@@ -56,6 +64,13 @@ const CartL1 = ({ navigate }) => (
     <div>
         <h1>Cart - L1 Page</h1>
         <button onClick={() => navigate('/cart/l2')}>Go to L2</button>
+    </div>
+);
+
+const CartL2 = ({ navigate }) => (
+    <div>
+        <h1>Cart - L2 Page</h1>
+        <button onClick={() => navigate('/cart')}>Go to Cart</button>
     </div>
 );
 
@@ -71,6 +86,7 @@ export default function Routes() {
                 <Route path="/categories" component={Categories}/>
                 <Route path="/categories/l1" component={CategoriesL1}/>
                 <Route path="/categories/l2" component={CategoriesL2}/>
+                <Route path="/categories/l3" component={CategoriesL3}/>
                 <Route path="/cart" component={Cart}/>
                 <Route path="/cart/l1" component={CartL1}/>
                 <Route path="*" component={NotFound}/>

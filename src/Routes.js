@@ -89,6 +89,7 @@ export default function Routes() {
                 <Route path="/categories/l3" component={CategoriesL3}/>
                 <Route path="/cart" component={Cart}/>
                 <Route path="/cart/l1" component={CartL1}/>
+                <Route path="/cart/l2" component={CartL2}/>
                 <Route path="*" component={NotFound}/>
             </Route>
         </Router>

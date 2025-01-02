@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    width: 100%;
+}
+.link {
+    padding: 10px;
+    text-decoration: none;
+}
+
+.header {
+    background: yellow;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.heading {
+    font-weight: bold;
+    font-size: 30px;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 20px;
+}
+
+.virtualHistoryContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.pageHeadingContainer {
+    padding: 10px 0;
+}

@@ -20,3 +20,7 @@ body {
     height: 100vh;
     padding: 20px;
 }
+
+.virtualHistoryContainer {
+    display: flex;
+}

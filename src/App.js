@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './styles/BottomBar.css';
+import './style.css';
 import { browserHistory } from 'react-router';
 import NavigationHistory from "./NavigationHistory.jsx";
 import NavigationEntries from "./NavigationEntries";
@@ -8,55 +9,6 @@ const getTabFromPath = (path) => {
     if (path.startsWith('/cart')) return 'cart';
     return 'home';
 };
-
-const styles = {
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100vh',
-    },
-    navBar: {
-        position: 'fixed',
-        bottom: 0,
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'space-around',
-        backgroundColor: '#f8f9fa',
-        boxShadow: '0 -1px 5px rgba(0, 0, 0, 0.1)',
-        padding: '10px 0',
-    },
-    button: {
-        border: 'none',
-        backgroundColor: 'transparent',
-        padding: '10px',
-        fontSize: '16px',
-        cursor: 'pointer',
-    },
-    content: {
-        flex: 1,
-        paddingBottom: '50px', // Space for the bottom navigation bar
-    },
-}
-
-
-// function popstateHandler() {
-//     window.addEventListener("popstate", function (event) {
-//         // find a workaround to know below is triggered only for back event
-//         const currentTabEntries = navigationHistory[currentTab];
-//         if(currentTabEntries.length === 1) {
-//             // if current is home tab then exit the webapp
-//             // if current is not home tab, take user to previous tab journey
-//             return;
-//         }
-//         navigationHistory[currentTab].pop();
-//         const nextPath  = navigationHistory[currentTab][navigationHistory[currentTab].length - 1];
-//         browserHistory.push(nextPath);
-//         // history.pushState({path: nextPath}, '', nextPath);
-//         // trying since pointer is not moving to next state after doing history.pushState
-//         // history.go(1);
-//     });
-// }
-
 
 const App = ({ children }) => {
     const [navigationHistory, setNavigationHistory] = useState({
@@ -79,6 +31,7 @@ const App = ({ children }) => {
             // find a workaround to know below is triggered only for back event
             const currentTabEntries = navigationHistoryRefValue[currentTabRefValue];
             if(currentTabEntries.length === 1) {
+                // TODO
                 // if current is home tab then exit the webapp
                 // if current is not home tab, take user to previous tab journey
                 return;
@@ -87,14 +40,15 @@ const App = ({ children }) => {
             setNavigationHistory((prev) => {
                 return {
                     ...prev,
-                    currentTab: navigationHistoryRefValue[currentTabRefValue].slice(0,-1)
+                    [currentTabRefValue]: navigationHistoryRefValue[currentTabRefValue].slice(0,-1)
                 }
             });
             const nextPath  = navigationHistoryRefValue[currentTabRefValue][navigationHistoryRefValue[currentTabRefValue].length - 2];
+            console.log('nextPath',nextPath)
             browserHistory.push(nextPath);
             // history.pushState({path: nextPath}, '', nextPath);
             // trying since pointer is not moving to next state after doing history.pushState
-            // history.go(1);
+            // browserHistory.go(1);
         });
     }
 
@@ -140,9 +94,6 @@ const App = ({ children }) => {
             return;
         }
 
-        console.log('Normal navigation, navigating to path:', path);
-
-        // Push the new path to the browser history
         browserHistory.replace(path);
         // history.replaceState({ path: path }, '', path);
         updateNavigationHistory(targetTab, path, 'add');
@@ -151,16 +102,16 @@ const App = ({ children }) => {
 
     return (
         <div>
-            <>
+            <div className='container'>
                 <div>{children && React.cloneElement(children, {navigate})}</div>
                 <h3 className="header">Browsers navigation history entries</h3>
                 <NavigationEntries />
                 <NavigationHistory navigationHistory={navigationHistory}/>
-            </>
-            <nav style={styles.navBar}>
-                <button style={styles.button}  onClick={() => navigate('/')}>Home</button>
-                <button style={styles.button} onClick={() => navigate('/categories')}>Categories</button>
-                <button style={styles.button} onClick={() => navigate('/cart')}>Cart</button>
+            </div>
+            <nav className="navBar">
+                <button className="button"  onClick={() => navigate('/')}>Home</button>
+                <button className="button" onClick={() => navigate('/categories')}>Categories</button>
+                <button className="button" onClick={() => navigate('/cart')}>Cart</button>
             </nav>
 
         </div>

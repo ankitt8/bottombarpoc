@@ -19,6 +19,13 @@ const HomeL1 = ({ navigate }) => (
 const HomeL2 = ({ navigate }) => (
     <div>
         <h1>Home - L2 Page</h1>
+        <button onClick={() => navigate('/l3')}>Go to L3</button>
+    </div>
+);
+
+const HomeL3 = ({ navigate }) => (
+    <div>
+        <h1>Home - L3 Page</h1>
         <button onClick={() => navigate('/')}>Go to Home</button>
     </div>
 );
@@ -83,6 +90,7 @@ export default function Routes() {
                 <IndexRoute component={Home}/>
                 <Route path="/l1" component={HomeL1}/>
                 <Route path="/l2" component={HomeL2}/>
+                <Route path="/l3" component={HomeL3}/>
                 <Route path="/categories" component={Categories}/>
                 <Route path="/categories/l1" component={CategoriesL1}/>
                 <Route path="/categories/l2" component={CategoriesL2}/>

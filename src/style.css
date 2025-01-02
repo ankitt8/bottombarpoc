@@ -12,8 +12,13 @@ body {
 .header {
     background: yellow;
     padding: 5px;
+    font-size: 20px;
+    font-weight: bold;
 }
-
+.heading {
+    font-weight: bold;
+    font-size: 30px;
+}
 .container {
     display: flex;
     flex-direction: column;
@@ -23,4 +28,9 @@ body {
 
 .virtualHistoryContainer {
     display: flex;
+    flex-direction: column;
+}
+
+.pageHeadingContainer {
+    padding: 10px 0;
 }

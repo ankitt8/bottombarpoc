@@ -16,48 +16,57 @@ const App = ({ children }) => {
         categories: ['/categories'],
         cart: ['/cart'],
     });
-    const [virtualHistory, setVirtualHistory] = useState([]);
+    const [virtualHistory, setVirtualHistory] = useState(['/']);
     const navigationHistoryRef = useRef(navigationHistory);
-    console.log(navigationHistory);
+    // console.log(navigationHistory);
     useEffect(() => {
         popstateHandler()
     }, []);
     useEffect(() => {
         navigationHistoryRef.current = navigationHistory;
     }, [navigationHistory]);
-    console.log('virtualHistory',virtualHistory)
+    // console.log('virtualHistory',virtualHistory)
     function popstateHandler() {
         window.addEventListener("popstate", function (event) {
-            console.log('popstate handler invoked');
-            if (event.state?.sentinel) {
-                console.log('Sentinel state detected, ignoring...');
-                history.back(); // Go back to the previous real state
-                return;
-            }
-            const currentTabRefValue = currentTabRef.current;
-            const navigationHistoryRefValue = navigationHistoryRef.current;
-            // find a workaround to know below is triggered only for back event
-            const currentTabEntries = navigationHistoryRefValue[currentTabRefValue];
-            if(currentTabEntries.length === 1) {
-                // TODO
-                // if current is home tab then exit the webapp
-                // if current is not home tab, take user to previous tab journey
-                return;
-            }
-            // navigationHistory[currentTab].pop();
-            setNavigationHistory((prev) => {
-                return {
-                    ...prev,
-                    [currentTabRefValue]: navigationHistoryRefValue[currentTabRefValue].slice(0,-1)
+            setTimeout(() => {
+                console.log('popstate handler invoked');
+                if (event.state?.sentinel) {
+                    console.log('Sentinel state detected, ignoring...');
+                    history.back(); // Go back to the previous real state
+                    return;
                 }
-            });
-            setVirtualHistory((prev) => (prev.slice(0,-1)));
-            const nextPath  = navigationHistoryRefValue[currentTabRefValue][navigationHistoryRefValue[currentTabRefValue].length - 2];
-            console.log('nextPath',nextPath)
-            browserHistory.push(nextPath);
-            // history.pushState({path: nextPath}, '', nextPath);
-            // trying since pointer is not moving to next state after doing history.pushState
-            // browserHistory.go(1);
+                const currentTabRefValue = currentTabRef.current;
+                const navigationHistoryRefValue = navigationHistoryRef.current;
+                // find a workaround to know below is triggered only for back event
+                const currentTabEntries = navigationHistoryRefValue[currentTabRefValue];
+                if(currentTabEntries.length === 1) {
+                    // TODO
+                    // if current is home tab then exit the webapp
+                    // if current is not home tab, take user to previous tab journey
+                    return;
+                }
+                // navigationHistory[currentTab].pop();
+                setNavigationHistory((prev) => {
+                    return {
+                        ...prev,
+                        [currentTabRefValue]: navigationHistoryRefValue[currentTabRefValue].slice(0,-1)
+                    }
+                });
+                setVirtualHistory((prev) => (prev.slice(0,-1)));
+                const nextPath  = navigationHistoryRefValue[currentTabRefValue][navigationHistoryRefValue[currentTabRefValue].length - 2];
+                console.log('nextPath',nextPath)
+                console.log(navigation.entries())
+
+                browserHistory.push(nextPath);
+                console.log(navigation.entries())
+
+                // pushSentinelState();
+                console.log('pushSentinelState');
+                // history.pushState({path: nextPath}, '', nextPath);
+                // trying since pointer is not moving to next state after doing history.pushState
+                // browserHistory.go(1);
+            }, 0)
+
         });
     }
 
@@ -80,36 +89,44 @@ const App = ({ children }) => {
                 updatedHistory[tab] = updatedHistory[tab].slice(0, -1);
             }
 
-            console.log('Updated navigation history:', updatedHistory);
+            // console.log('Updated navigation history:', updatedHistory);
             return updatedHistory;
         });
     }
-
-    const pushSentinelState = () => {
-        // history.push({ sentinel: true }, '', window.location.pathname);
-        history.pushState({ sentinel: true }, '', window.location.pathname);
-    };
+    // tried not required
+    // const pushSentinelState = () => {
+    //     // history.push({ sentinel: true }, '', window.location.pathname);
+    //     console.log('pushSentinelState 96')
+    //     console.log(navigation.entries());
+    //     history.pushState({ sentinel: true }, '', window.location.pathname);
+    //     console.log(navigation.entries())
+    // };
     const navigate = (path) => {
         const targetTab = getTabFromPath(path);
 
         const lastVisitedPageOfTargetTab = navigationHistory[targetTab][navigationHistory[targetTab].length - 1];
-        console.log(lastVisitedPageOfTargetTab);
+        // console.log(lastVisitedPageOfTargetTab);
 
         // If switching tabs, navigate to the last visited page of the target tab
         if (targetTab !== currentTab) {
-            console.log('Switching tabs, the last visited page of the target tab is:', lastVisitedPageOfTargetTab);
+            // console.log('Switching tabs, the last visited page of the target tab is:', lastVisitedPageOfTargetTab);
+
+            // history.go(0);
+            for(let i= 0; i < navigationHistory[targetTab].length; i++) {
+                browserHistory.push(navigationHistory[targetTab][i]);
+            }
 
             // Replace the browser history to the last visited page of the target tab
             setVirtualHistory((prev) => ([...prev, lastVisitedPageOfTargetTab]));
-            browserHistory.replace(lastVisitedPageOfTargetTab);
-            pushSentinelState();
+            // browserHistory.replace(lastVisitedPageOfTargetTab);
+            // pushSentinelState();
             // history.replaceState({ path: lastVisitedPageOfTargetTab }, '', lastVisitedPageOfTargetTab);
             setCurrentTab(targetTab);
             return;
         }
         setVirtualHistory((prev) => ([...prev, path]));
-        browserHistory.replace(path);
-        pushSentinelState();
+        browserHistory.push(path);
+        // pushSentinelState();
         // history.replaceState({ path: path }, '', path);
         updateNavigationHistory(targetTab, path, 'add');
     };
@@ -119,19 +136,29 @@ const App = ({ children }) => {
         <div>
             <div className='container'>
                 <div>{children && React.cloneElement(children, {navigate})}</div>
-                <h3 className="header">Browsers navigation history entries</h3>
-                <NavigationEntries/>
-                <NavigationHistory navigationHistory={navigationHistory}/>
-                <h3 className="header">Virtual History</h3>
-                <div className="virtualHistoryContainer">
-                    {virtualHistory.map((virtualHistoryEntry) => {
-                        return <div> {virtualHistoryEntry} ,</div>
-                    })}
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                     <div style={{borderRight: '1px solid black'}}>
+                        <div className="header">Virtual History</div>
+                        <div className="virtualHistoryContainer">
+                            {virtualHistory.map((virtualHistoryEntry, index) => {
+                                return <div>{virtualHistoryEntry}</div>
+                            })}
+                        </div>
+                    </div>
+                    <div>
+                        <div className="header">Browsers navigation history entries</div>
+                        <NavigationEntries/>
+                    </div>
+
                 </div>
+
+
+                <NavigationHistory navigationHistory={navigationHistory}/>
+
 
             </div>
             <nav className="navBar">
-                <button className="button"  onClick={() => navigate('/')}>Home</button>
+                <button className="button" onClick={() => navigate('/')}>Home</button>
                 <button className="button" onClick={() => navigate('/categories')}>Categories</button>
                 <button className="button" onClick={() => navigate('/cart')}>Cart</button>
             </nav>

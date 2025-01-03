@@ -41,12 +41,16 @@ const Categories = ({ navigate }) => (
 const CategoriesL1 = ({navigate}) => (
     <div className="pageHeadingContainer">
         <div className="heading">Categories - L1 Page</div>
-        <button onClick={() => navigate('/categories/l2')}>Go to L2</button>
-        <button onClick={() => navigate('/categories/l3')}>Go to L3</button>
+        <div style={{display: 'flex'}}>
+            <button onClick={() => navigate('/categories/l2')}>Go to L2</button>
+            <div style={{marginRight: 20}}></div>
+            <button onClick={() => navigate('/categories/l3')}>Go to L3</button>
+        </div>
+
     </div>
 );
 
-const CategoriesL2 = ({ navigate }) => (
+const CategoriesL2 = ({navigate}) => (
     <div className="pageHeadingContainer">
         <div className="heading">Categories - L2 Page</div>
         <button onClick={() => navigate('/categories')}>Go to Categories</button>

@@ -114,6 +114,8 @@ const App = ({ children }) => {
             // console.log('Switching tabs, the last visited page of the target tab is:', lastVisitedPageOfTargetTab);
 
             // history.go(0);
+            // IMP SEe how this experience will be inc ase of pages which load
+            // data from api.
             for(let i= 0; i < navigationHistory[targetTab].length; i++) {
                 browserHistory.push(navigationHistory[targetTab][i]);
             }
@@ -143,7 +145,7 @@ const App = ({ children }) => {
                         <div className="header">Virtual History</div>
                         <div className="virtualHistoryContainer">
                             {virtualHistory.map((virtualHistoryEntry, index) => {
-                                return <div>{virtualHistoryEntry}</div>
+                                return <div style={{fontSize: 14}}>{virtualHistoryEntry}</div>
                             })}
                         </div>
                     </div>

@@ -7,3 +7,9 @@
     color: #28a745; /* Highlight new string */
     transform: scale(1.2); /* Subtle scale effect */
 }
+.entry {
+    display: flex;
+}
+.key {
+    font-weight: 400;
+}

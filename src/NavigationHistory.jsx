@@ -39,7 +39,7 @@ const NavigationHistory = ({ navigationHistory }) => {
             <div className="history-content">
                 {Object.entries(navigationHistory).map(([key, paths]) => (
                     <div className="entry" key={key}>
-                        <b className="key">{key}:</b>
+                        <div className="key">{key}:</div>
                         <span className="paths">
                             {Array.isArray(paths)
                                 ? paths.map((path, index) => (

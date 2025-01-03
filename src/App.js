@@ -30,11 +30,13 @@ const App = ({ children }) => {
         window.addEventListener("popstate", function (event) {
             setTimeout(() => {
                 console.log('popstate handler invoked');
-                if (event.state?.sentinel) {
-                    console.log('Sentinel state detected, ignoring...');
-                    history.back(); // Go back to the previous real state
-                    return;
-                }
+                // trying dummy state pushing not required now
+                // if (event.state?.sentinel) {
+                //     console.log('Sentinel state detected, ignoring...');
+                //     history.back(); // Go back to the previous real state
+                //     return;
+                // }
+                // revisit the whole logic with new approach
                 const currentTabRefValue = currentTabRef.current;
                 const navigationHistoryRefValue = navigationHistoryRef.current;
                 // find a workaround to know below is triggered only for back event
@@ -57,7 +59,7 @@ const App = ({ children }) => {
                 console.log('nextPath',nextPath)
                 console.log(navigation.entries())
 
-                browserHistory.push(nextPath);
+                // browserHistory.push(nextPath);
                 console.log(navigation.entries())
 
                 // pushSentinelState();

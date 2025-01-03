@@ -140,7 +140,7 @@ const App = ({ children }) => {
         <div>
             <div className='container'>
                 <div>{children && React.cloneElement(children, {navigate})}</div>
-                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <div style={{display: 'flex'}}>
                      <div style={{borderRight: '1px solid black'}}>
                         <div className="header">Virtual History</div>
                         <div className="virtualHistoryContainer">

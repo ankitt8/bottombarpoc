@@ -9,6 +9,13 @@ const getTabFromPath = (path) => {
     if (path.startsWith('/cart')) return 'cart';
     return 'home';
 };
+const BOTTOMBAR = 'bottombar';
+const isClickSourceBottomBar = (source) => {
+    return source === BOTTOMBAR;
+}
+let parentUrl = `http://localhost:3000/`;
+let firstClick = true;
+let secondClick = false;
 
 const App = ({ children }) => {
     const [navigationHistory, setNavigationHistory] = useState({
@@ -58,19 +65,75 @@ const App = ({ children }) => {
         });
     }
 
-    const navigate = (path) => {
+    const navigate = (path, source) => {
         const targetTab = getTabFromPath(path);
         const currentPath = window.location.pathname;
-        if (targetTab === currentTab && path === currentPath) {
-            alert('you clicked same tab, currently not doing anything');
-            return;
+        const isSameTab = targetTab === currentTab;
+        if(isClickSourceBottomBar(source) && isSameTab) {
+            console.log('go to l0 of current tab');
+            //first click take user to l0 with whatever state it was
+            if(firstClick) {
+                console.log('firstClick');
+                firstClick = false;
+                secondClick = true;
+                const navigationEntriesUrls = navigation.entries().map(entry => entry.url);
+                // console.log(
+                //     findParentIndex(navigationEntriesUrls, navigationEntriesUrls[navigationEntriesUrls.length - 1])
+                // );
+                console.log(parentUrl)
+                for(let i= navigationEntriesUrls.length - 1; i >= 0; i--) {
+                    if(navigationEntriesUrls[i] === parentUrl) {
+                        console.log(navigationEntriesUrls.length - i - 1);
+                        const historyEntriesToGoBack  = navigationEntriesUrls.length - i - 1;
+                        if(historyEntriesToGoBack === 0) {
+                            history.go(0)
+                        } else {
+                            history.go(-1 * historyEntriesToGoBack);
+                        }
+                        return;
+                    }
+                }
+                setNavigationHistory((prev) => {
+                    return {
+                        ...prev,
+                        [currentTab]: [currentTab[0]]
+                    }
+                });
+                return;
+            }
+            if(secondClick) {
+                console.log('secondClick');
+                secondClick = true;
+                window.location.reload();
+                firstClick = false;
+                return;
+            }
+
         }
-        const lastVisitedPageOfTargetTab = navigationHistory[targetTab][navigationHistory[targetTab].length - 1];
+        // if (isClickSourceBottomBar() && isSameTab &&  ) {
+        //     alert('you clicked same tab, currently not doing anything');
+        //     return;
+        // }
+
         if (targetTab !== currentTab) {
+            const lastVisitedPageOfTargetTab = navigationHistory[targetTab][navigationHistory[targetTab].length - 1];
+            // todo
+            firstClick = true;
+            secondClick = false;
+            if(targetTab === 'home') {
+                parentUrl = `http://localhost:3000/`;
+            } else {
+                parentUrl = `http://localhost:3000/${targetTab}`;
+            }
+            console.log(parentUrl);
+
             // IMP SEe how this experience will be inc ase of pages which load
             // data from api.
             for(let i= 0; i < navigationHistory[targetTab].length; i++) {
-                browserHistory.push(navigationHistory[targetTab][i]);
+                browserHistory.push({
+                    pathname: navigationHistory[targetTab][i],
+                    state: {key: 'currentPath'}
+                });
             }
             setVirtualHistory((prev) => ([...prev, lastVisitedPageOfTargetTab]));
             setCurrentTab(targetTab);
@@ -105,9 +168,9 @@ const App = ({ children }) => {
                 <NavigationHistory navigationHistory={navigationHistory}/>
             </div>
             <nav className="navBar">
-                <button className="button" onClick={() => navigate('/')}>Home</button>
-                <button className="button" onClick={() => navigate('/categories')}>Categories</button>
-                <button className="button" onClick={() => navigate('/cart')}>Cart</button>
+                <button className="button" onClick={() => navigate('/', BOTTOMBAR)}>Home</button>
+                <button className="button" onClick={() => navigate('/categories', BOTTOMBAR)}>Categories</button>
+                <button className="button" onClick={() => navigate('/cart', BOTTOMBAR)}>Cart</button>
             </nav>
 
         </div>

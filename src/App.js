@@ -41,7 +41,6 @@ const App = ({ children }) => {
         window.addEventListener("popstate", function (event) {
             const currentTabRefValue = currentTabRef.current;
             const navigationHistoryRefValue = navigationHistoryRef.current;
-            const currentTabEntries = navigationHistoryRefValue[currentTabRefValue];
             setNavigationHistory((prev) => {
                 return {
                     ...prev,

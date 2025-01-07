@@ -57,7 +57,7 @@ const CategoriesL1 = ({navigate}) => {
     useEffect(() => {
         document.title = 'Categories L1';
     }, []);
-    return <div className="pageHeadingContainer">
+    return <div className="pageHeadingContainer" style={{background: 'red'}}>
         <div className="heading">Categories - L1 Page</div>
         <div style={{display: 'flex'}}>
             <button onClick={() => navigate('/categories/l2')}>Go to L2</button>

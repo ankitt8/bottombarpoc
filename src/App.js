@@ -16,7 +16,7 @@ const isClickSourceBottomBar = (source) => {
 let parentUrl = `http://localhost:3000/`;
 let firstClick = true;
 let secondClick = false;
-
+console.log(process.env.NODE_ENV);
 const App = ({ children }) => {
     const [navigationHistory, setNavigationHistory] = useState({
         home: ['/'],

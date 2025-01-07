@@ -27,7 +27,7 @@ const HomeL2 = ({ navigate }) => (
 const HomeL3 = ({ navigate }) => (
     <div className="pageHeadingContainer">
         <div className="heading">Home - L3 Page</div>
-        <button onClick={() => navigate('/')}>Go to Home</button>
+        {/*<button onClick={() => navigate('/')}>Go to Home</button>*/}
     </div>
 );
 
@@ -53,7 +53,7 @@ const CategoriesL1 = ({navigate}) => (
 const CategoriesL2 = ({navigate}) => (
     <div className="pageHeadingContainer">
         <div className="heading">Categories - L2 Page</div>
-        <button onClick={() => navigate('/categories')}>Go to Categories</button>
+        {/*<button onClick={() => navigate('/categories')}>Go to Categories</button>*/}
     </div>
 );
 
@@ -61,7 +61,7 @@ const CategoriesL2 = ({navigate}) => (
 const CategoriesL3 = ({ navigate }) => (
     <div className="pageHeadingContainer">
         <div className="heading">Categories - L3 Page</div>
-        <button onClick={() => navigate('/categories')}>Go to Categories</button>
+        {/*<button onClick={() => navigate('/categories')}>Go to Categories</button>*/}
     </div>
 );
 
@@ -82,7 +82,7 @@ const CartL1 = ({navigate}) => (
 const CartL2 = ({ navigate }) => (
     <div className="pageHeadingContainer">
         <div className="heading">Cart - L2 Page</div>
-        <button onClick={() => navigate('/cart')}>Go to Cart</button>
+        {/*<button onClick={() => navigate('/cart')}>Go to Cart</button>*/}
     </div>
 );
 

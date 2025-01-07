@@ -48,6 +48,7 @@ const NavigationHistory = ({ navigationHistory }) => {
                                         className={`path ${
                                             animatedPaths[key]?.includes(path) ? 'animate' : ''
                                         }`}
+                                        style={{fontSize: 16}}
                                     >
                                           {`'${path}'`}
                                         {index < paths.length - 1 && ', '}

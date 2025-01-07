@@ -54,7 +54,7 @@ const App = ({ children }) => {
                         [currentTabRefValue]: navigationHistoryRefValue[currentTabRefValue].slice(0,-1)
                     }
                 });
-                setVirtualHistory((prev) => (prev.slice(0,-1)));
+                // setVirtualHistory((prev) => (prev.slice(0,-1)));
                 const nextPath  = navigationHistoryRefValue[currentTabRefValue][navigationHistoryRefValue[currentTabRefValue].length - 2];
                 console.log('nextPath',nextPath)
                 console.log(navigation.entries())
@@ -141,14 +141,14 @@ const App = ({ children }) => {
             <div className='container'>
                 <div>{children && React.cloneElement(children, {navigate})}</div>
                 <div style={{display: 'flex'}}>
-                     <div style={{borderRight: '1px solid black'}}>
-                        <div className="header">Virtual History</div>
-                        <div className="virtualHistoryContainer">
-                            {virtualHistory.map((virtualHistoryEntry, index) => {
-                                return <div style={{fontSize: 14}}>{virtualHistoryEntry}</div>
-                            })}
-                        </div>
-                    </div>
+                    {/* <div style={{borderRight: '1px solid black'}}>*/}
+                    {/*    <div className="header">Virtual History</div>*/}
+                    {/*    <div className="virtualHistoryContainer">*/}
+                    {/*        {virtualHistory.map((virtualHistoryEntry, index) => {*/}
+                    {/*            return <div style={{fontSize: 14}}>{virtualHistoryEntry}</div>*/}
+                    {/*        })}*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                     <div>
                         <div className="header">Browsers navigation history entries</div>
                         <NavigationEntries/>

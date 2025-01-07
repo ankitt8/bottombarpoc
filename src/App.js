@@ -60,7 +60,11 @@ const App = ({ children }) => {
 
     const navigate = (path) => {
         const targetTab = getTabFromPath(path);
-
+        const currentPath = window.location.pathname;
+        if (targetTab === currentTab && path === currentPath) {
+            alert('you clicked same tab, currently not doing anything');
+            return;
+        }
         const lastVisitedPageOfTargetTab = navigationHistory[targetTab][navigationHistory[targetTab].length - 1];
         if (targetTab !== currentTab) {
             // IMP SEe how this experience will be inc ase of pages which load
